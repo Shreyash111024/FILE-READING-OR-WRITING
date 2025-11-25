@@ -30,6 +30,8 @@ Interprocess Communication: Files can serve as a simple mechanism for interproce
 4. Reproducibility and Documentation:
 Reproducible Research: Saving input parameters, intermediate results, and final outputs to files helps ensure the reproducibility of research findings.
 Documentation: Generating reports or summaries of research findings in text files provides easily accessible documentation.
+More information
+
 Analysis ~ 
 Basic file operations in C, such as opening, reading, writing, and closing files, are fundamental for data analysis in several ways:
 Data Ingestion:
@@ -56,52 +58,143 @@ Close: both files using fclose().
 This demonstrates how basic file operations form the backbone of data analysis workflows in C, enabling data handling from raw input to structured output.
 
 Ideate ~
-Goals and organization refer to the process of setting strategic objectives for an organization and creating a structure to achieve them. Goals provide direction, motivate employees, and help align efforts and resources towards a common purpose, while the organizational structure ensures that these goals are broken down, managed, and executed effectively across different levels and departments. This alignment is crucial for making strategic decisions and measuring progress. 
-Organizational goals
-Definition: Strategic objectives that an organization sets to achieve a desired state of success and profit.
-Purpose: To guide employee efforts, provide a clear direction, and align teams towards a shared purpose.
-Types: Can be broken down into strategic (long-term, top-level), tactical (medium-term, middle-management), and operational (short-term, lower-level) goals.
-Characteristics: Goals should be specific, measurable, achievable, relevant, and time-bound (SMART) to ensure they are effective. 
-Organizational structure
-Definition: The framework or system that defines how tasks are divided, grouped, and coordinated within an organization.
-Purpose: To provide a roadmap for actions and decisions, and to ensure that the organization's efforts are aligned towards its goals.
+Stock Management System
+A stock management system refers to the process of recording, monitoring, and updating information about different items in inventory. In programming, stock management usually involves taking input such as stock name, quantity, and price, calculating the total value, and saving this information into a file for future reference. This helps maintain accurate records and simplifies business tracking.
+Purpose of Managing Stocks
+Managing stocks ensures that an organization always knows:
+Which items are available
 
 
-Key elements:
-Hierarchy: Goals can be set for different levels of the organization, from individuals and teams to the entire company.
-Communication: Clear communication of goals is essential for employee engagement and to ensure everyone works towards the same objectives.
-Alignment: The structure helps align all departments and employees to work together toward the same collective objectives. 
+How much quantity is in hand
+
+
+What price each stock carries
+
+
+What is the total value of the stock
+
+
+This information is useful for calculating profits, planning purchases, avoiding shortages, and maintaining financial accuracy.
+
+Stock Records
+Definition:
+ Stock records refer to the stored information about each item, including name, quantity, price, and total value.
+Purpose:
+ To maintain a permanent report of all stock transactions so that the organization can review and calculate expenses or profit whenever needed.
+Details Saved:
+Stock Name: The item or product being recorded.
+
+
+Quantity: Number of units purchased.
+
+
+Price: Cost per unit.
+
+
+Total Price: Calculated as price × quantity, stored to track expenses.
+
+
+Importance:
+ Maintaining these records helps businesses track inventory levels, control purchases, and calculate financial totals.
+
+
+
+File Handling in Stock Management
+Definition:
+ File handling is the method used in programming to store stock details into a text file such as stocks.txt.
+Purpose:
+ To save stock information permanently, even after the program closes.
+User Input
+The user enters:
+Stock name
+
+
+Quantity
+
+
+Price
+
+
+This data is essential for tracking inventory.
+Calculation
+The program automatically calculates the total cost of each stock entry.
+File Storage
+All data is saved in a text file using file handling to ensure:
+Permanent record
+
+
+Easy viewing
+
+
+No data loss after program ends
+Stock List
 
 Build ~ 
 #include <stdio.h>
 
-
-int main()
-{
-    char goals[1000]= ("Objective 1: Run a 5K race.\nObjective 2: Get 9+ CGPA.");
+int main() {
+    FILE *fpr;
+    char stock[30];
+    float price;
+    int quan;
     int choice;
-    printf("Enter Either You want to write or read the Goals\n Enter 1 for Write or 2 for Read\n Enter choice:");
-    scanf("%d",&choice);
-    if(choice==1){
-    FILE *file;
-    file = fopen("goals.txt", "w");  
-    fprintf(file, "%s", goals); 
-    fclose(file);  
-    }
-    
-    else if(choice==2){
-    FILE *file;
-    file = fopen("goals.txt", "r");  
-    fscanf(file, "%s", goals); 
-    fclose(file);  
-    }
-    else{
-        printf("invalid input");
-    }
 
+    printf("Choose option:\n");
+    printf("1. Write(Add stock)\n");
+    printf("2. Read(View all stocks)\n");
+    printf("Enter choice: ");
+    scanf("%d", &choice);
+
+    if (choice == 1) {
+        fpr = fopen("stocks.txt", "a");
+
+        if (fpr == NULL) {
+            printf("Error opening file!\n");
+            return 0;
+        }
+
+        printf("Enter stock name: ");
+        scanf("%s", stock);
+
+        printf("Enter quantity: ");
+        scanf("%d", &quan);
+
+        printf("Enter price: ");
+        scanf("%f", &price);
+
+        float total = price * quan;
+        printf("Total price: %.2f\n", total);
+
+        fprintf(fpr, "Stock: %s\nQuantity: %d\nPrice: %.2f\nTotal Price: %.2f\n\n",stock, quan, price, total);
+
+        fclose(fpr);
+
+        printf("Stock data saved successfully.\n");
+    }
+    else if (choice == 2) {
+    
+        fpr = fopen("stocks.txt", "r");
+
+        if (fpr == NULL) {
+            printf("Error opening file for reading! File may not exist.\n");
+            return 0;
+        }
+
+        printf("\n--- Saved Stock Details ---\n\n");
+
+        
+
+        fclose(fpr);
+    }
+    else {
+        printf("Invalid choice!\n");
+    }
 
     return 0;
 }
+
+
+
 
 
 Test Cases ~ 
@@ -112,4 +205,6 @@ Test Case 2-
 
 Implementation~
 https://github.com/Shreyash111024/FILE-READING-OR-WRITING.git
+
+
 
